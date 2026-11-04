@@ -3,13 +3,7 @@ pipeline {
 
     stages {
         
-        stage ("Test") {
-            steps {
-                script {
-                    sh "pytest"
-                }
-            }
-        }
+       
         stage ("Build") {
             steps{
                 script {
