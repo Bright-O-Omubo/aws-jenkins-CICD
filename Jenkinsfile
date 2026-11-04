@@ -2,18 +2,18 @@ pipeline {
     agent any 
 
     stages {
-
-        stage ("Build") {
-            steps{
-                script {
-                    sh "docker build -t web-version:2.0 ."
-                }
-            }
-        }
+        
         stage ("Test") {
             steps {
                 script {
                     sh "pytest"
+                }
+            }
+        }
+        stage ("Build") {
+            steps{
+                script {
+                    sh "docker build -t web-version:2.0 ."
                 }
             }
         }
@@ -32,7 +32,7 @@ pipeline {
             steps {
                 script {
                     sh "docker pull 153099270414.dkr.ecr.us-east-1.amazonaws.com/web-version:2.0"
-                    sh "docker run -d -p 8080:8080 153099270414.dkr.ecr.us-east-1.amazonaws.com/web-version:2.0"
+                    sh "docker run -d -p 8080:5000 153099270414.dkr.ecr.us-east-1.amazonaws.com/web-version:2.0"
                 }
             }
         }
