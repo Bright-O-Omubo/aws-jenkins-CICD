@@ -27,7 +27,7 @@ pipeline {
                 script {
                     sh "aws --version"
                     sh "docker pull 153099270414.dkr.ecr.us-east-1.amazonaws.com/web-version:2.0"
-                    sh "docker run -d -p 8080:5000 153099270414.dkr.ecr.us-east-1.amazonaws.com/web-version:2.0"
+                    sh "docker run -d -p 8081:5000 153099270414.dkr.ecr.us-east-1.amazonaws.com/web-version:2.0"
                 }
             }
         }
