@@ -29,6 +29,7 @@ pipeline {
                 script {
                     sh "aws --version"
                     sh "docker pull 153099270414.dkr.ecr.us-east-1.amazonaws.com/${version}"
+                    sh "docker rm -f nervous_robinson || true"
                     sh "docker run -d -p 8081:5000 153099270414.dkr.ecr.us-east-1.amazonaws.com/${version}"
                 }
             }
