@@ -1,7 +1,7 @@
 pipeline {
     agent any 
     environment {
-        version=web-version:${BUILD_NUMBER}
+        version= "web-version:${BUILD_NUMBER}"
     }
     stages {
         
