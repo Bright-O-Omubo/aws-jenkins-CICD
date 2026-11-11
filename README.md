@@ -35,13 +35,13 @@ Build the image:
 docker build -t <imageName>:<imageTag> .
 ```
 
-Start a container and map host port 8081 to container port 5000:
+Start a container and map host port 8081 to container port 5000
 
 ```bash
 docker run --name <containerName> -p 8081:5000 <imageName>
 ```
 To Access the web page 
-Open `http://localhost:8081`.
+Open `http://localhost:8081`
 
 To stop and remove the container:
 
