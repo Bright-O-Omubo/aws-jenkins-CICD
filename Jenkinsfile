@@ -41,7 +41,6 @@ pipeline {
                         sh """
                             ssh -o StrictHostKeyChecking=no ubuntu@32.200.160.110 aws sts get-caller-identity '
                                 docker pull 153099270414.dkr.ecr.us-east-1.amazonaws.com/${version}
-                                docker rm -f nervous_robinson || true
                                 docker run -d -p 8081:5000 153099270414.dkr.ecr.us-east-1.amazonaws.com/${version}
                             '
                         """        
