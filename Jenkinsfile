@@ -16,25 +16,26 @@ pipeline {
         }
         stage ("ECR push") {
             steps {
-                withCredentials ([
-                    usernamePassword (
-                        credentialsId: 'jenkins-awsEcr',
-                        usernameVariable: 'AWS_ACCESS_KEY_ID',
-                        passwordVariable: 'AWS_SECRET_ACCESS_KEY'
-                    )
-                ])
                 script {
-                     sshagent(['aws-JKey']) {
-                        sh "ssh ubuntu@32.200.160.110 aws sts get-caller-identity"
-                        sh "aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 153099270414.dkr.ecr.us-east-1.amazonaws.com"
-                        sh "docker tag ${version} 153099270414.dkr.ecr.us-east-1.amazonaws.com/${version}"
-                        sh "docker push 153099270414.dkr.ecr.us-east-1.amazonaws.com/${version}"
-                    }
+                    withCredentials ([
+                        usernamePassword (
+                            credentialsId: 'jenkins-awsEcr',
+                            usernameVariable: 'AWS_ACCESS_KEY_ID',
+                            passwordVariable: 'AWS_SECRET_ACCESS_KEY'
+                        )
+                    ]) {
+                        sshagent(['aws-JKey']) {
+                            sh "ssh ubuntu@32.200.160.110 aws sts get-caller-identity"
+                            sh "aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 153099270414.dkr.ecr.us-east-1.amazonaws.com"
+                            sh "docker tag ${version} 153099270414.dkr.ecr.us-east-1.amazonaws.com/${version}"
+                            sh "docker push 153099270414.dkr.ecr.us-east-1.amazonaws.com/${version}"
+                        }
+                    }                 
                 }
             }
         }
         stage ("Deploy") {
-            steps {
+            steps {     
                 script {
                     sshagent(['aws-JKey']) {
                         sh "aws --version"
@@ -46,4 +47,4 @@ pipeline {
             }
         }
     }
-} 
+}           
