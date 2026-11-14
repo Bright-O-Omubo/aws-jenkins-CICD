@@ -2,7 +2,7 @@ pipeline {
     agent any 
     environment {
         version= "web-version:${BUILD_NUMBER}"
-        URL="http://32.200.160.110:8081/health"
+        site="http://32.200.160.110:8081/health"
     }
     stages {
         
@@ -46,4 +46,4 @@ pipeline {
             }
         }
     }
-}
+} 
