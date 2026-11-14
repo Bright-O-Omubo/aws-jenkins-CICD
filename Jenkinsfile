@@ -25,9 +25,9 @@ pipeline {
                         )
                     ]) {
                         sshagent(['aws-JKey']) {
-                            sh """"ssh -o StrictHostKeyChecking=no ubuntu@32.200.160.110 aws sts get-caller-identity
-                                   aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 153099270414.dkr.ecr.us-east-1.amazonaws.com
-                                   docker tag ${version} 153099270414.dkr.ecr.us-east-1.amazonaws.com/${version}
+                            sh """"ssh -o StrictHostKeyChecking=no ubuntu@32.200.160.110 aws sts get-caller-identity \n
+                                   aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 153099270414.dkr.ecr.us-east-1.amazonaws.com \n
+                                   docker tag ${version} 153099270414.dkr.ecr.us-east-1.amazonaws.com/${version} \n
                                    docker push 153099270414.dkr.ecr.us-east-1.amazonaws.com/${version} """"
                         }
                     }                 
