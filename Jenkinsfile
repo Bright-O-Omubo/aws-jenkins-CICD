@@ -37,13 +37,21 @@ pipeline {
         stage ("Deploy") {
             steps {     
                 script {
-                    sshagent(['aws-JKey']) {
-                        sh """
-                            ssh -o StrictHostKeyChecking=no ubuntu@32.200.160.110 aws sts get-caller-identity '
-                                docker pull 153099270414.dkr.ecr.us-east-1.amazonaws.com/${version}
-                                docker run -d -p 8081:5000 153099270414.dkr.ecr.us-east-1.amazonaws.com/${version}
-                            '
-                        """        
+                     withCredentials ([
+                        usernamePassword (
+                            credentialsId: 'jenkins-awsEcr',
+                            usernameVariable: 'AWS_ACCESS_KEY_ID',
+                            passwordVariable: 'AWS_SECRET_ACCESS_KEY'
+                        )
+                    ]) {
+                        sshagent(['aws-JKey']) {
+                            sh """
+                                ssh -o StrictHostKeyChecking=no ubuntu@32.200.160.110 aws sts get-caller-identity '
+                                    docker pull 153099270414.dkr.ecr.us-east-1.amazonaws.com/${version}
+                                    docker run -d -p 8081:5000 153099270414.dkr.ecr.us-east-1.amazonaws.com/${version}
+                                '
+                            """        
+                        }
                     }
                 }
             }
